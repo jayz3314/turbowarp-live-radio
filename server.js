@@ -1,4 +1,8 @@
+const express = require('express');
 const NodeMediaServer = require('node-media-server');
+const path = require('path');
+
+const app = express();
 const config = {
   rtmp: {
     port: 1935,
@@ -13,5 +17,11 @@ const config = {
   }
 };
 
+app.use('/audio', express.static(path.join(__dirname, 'audio')));
+
 const nms = new NodeMediaServer(config);
 nms.run();
+
+app.listen(8000, () => {
+  console.log('Server is running on port 8000');
+});
